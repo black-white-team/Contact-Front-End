@@ -29,6 +29,7 @@
     <el-table :data="tableData" border stripe class="custom-table">
       <el-table-column prop="username" label="Username" />
 
+
       <!-- 电话号码列 -->
       <el-table-column label="Phone Numbers" width="180">
         <template #default="scope">
@@ -66,6 +67,7 @@
       </el-table-column>
 
       <el-table-column fixed="right" label="Operations" min-width="180">
+
         <template #default="scope">
           <el-button
             class="operation-button modify-button"
@@ -101,11 +103,18 @@
           </el-button>
         </template>
       </el-table-column>
+      <el-table-column label="Bookmarked" width="120">
+        <template #default="scope">
+          <el-tag v-if="scope.row.bookmarks" effect="dark" type="success">Yes</el-tag>
+          <el-tag v-else effect="dark" type="info">No</el-tag>
+        </template>
+      </el-table-column>
     </el-table>
 
     <!-- 分页 -->
     <div class="pagination-group">
       <el-pagination
+
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
@@ -114,6 +123,7 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       >
+
       </el-pagination>
     </div>
 
@@ -461,6 +471,7 @@
 
     <!-- 导入对话框 -->
     <el-dialog
+
       title="Import Excel"
       v-model="importDialogVisible"
       width="500px"
@@ -476,6 +487,7 @@
         :on-success="handleImportSuccess"
         :on-error="handleImportError"
       >
+
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">
           Drag Excel files here or click to upload
@@ -559,6 +571,7 @@ export default {
 
     // 加载书签数据
     loadBookMark() {
+
       axios
         .get("/api/user/favorites", {
           params: {
@@ -576,12 +589,14 @@ export default {
           ElMessage.error("Failed to load bookmarks");
           console.error(error);
         });
+
     },
 
     // 新增用户
     add() {
       this.dialogVisible = true;
       this.form = {
+
         id: "",
         username: "",
         bookmark: false, // 重置 bookmark 字段
@@ -590,10 +605,12 @@ export default {
         socialMediaHandles: [],
         physicalAddresses: [],
       };
+
     },
 
     // 保存用户（新增或更新）
     save() {
+
       if (this.form.id && Number.isFinite(Number(this.form.id))) {
         // 更新
         axios
@@ -630,6 +647,7 @@ export default {
             ElMessage.error("Addition failed");
             console.error(error);
           });
+
       }
     },
 
@@ -659,6 +677,7 @@ export default {
 
     // 添加书签
     handleBookMark(row) {
+
       axios
         .patch(`/api/user/favorite/${row.id}`)
         .then((res) => {
@@ -677,6 +696,7 @@ export default {
           ElMessage.error("Bookmark failed");
           console.error(error);
         });
+
     },
 
     // 分页改变每页数量
@@ -724,10 +744,12 @@ export default {
 
     // 验证上传文件
     beforeUpload(file) {
+
       const isExcel =
         file.type ===
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
         file.type === "application/vnd.ms-excel";
+
       if (!isExcel) {
         ElMessage.error("请上传 Excel 文件");
       }
@@ -1056,6 +1078,7 @@ export default {
   color: #333;
 }
 
+
 /* 联系方式对话框样式 */
 .dynamic-field {
   display: flex;
@@ -1078,3 +1101,4 @@ export default {
   margin-top: 8px; /* Reduced margin */
 }
 </style>
+

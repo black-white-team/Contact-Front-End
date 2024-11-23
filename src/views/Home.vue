@@ -91,11 +91,13 @@
           </el-popconfirm>
           <el-button
             class="operation-button"
-            type="warning"
+            :type="scope.row.bookmark ? 'warning' : 'default'"
             circle
             @click="handleBookMark(scope.row)"
           >
-            <el-icon><Star /></el-icon>
+            <el-icon :class="{ bookmarked: scope.row.bookmark }"
+              ><Star
+            /></el-icon>
           </el-button>
         </template>
       </el-table-column>
@@ -507,6 +509,7 @@ export default {
       form: {
         id: "",
         username: "",
+        bookmark: false, // 新增 bookmark 字段
         phoneNumbers: [],
         emailAddresses: [],
         socialMediaHandles: [],
@@ -557,7 +560,7 @@ export default {
     // 加载书签数据
     loadBookMark() {
       axios
-        .get("/api/bookmark", {
+        .get("/api/user/favorites", {
           params: {
             pageNum: this.currentPage,
             pageSize: this.pageSize,
@@ -581,6 +584,7 @@ export default {
       this.form = {
         id: "",
         username: "",
+        bookmark: false, // 重置 bookmark 字段
         phoneNumbers: [],
         emailAddresses: [],
         socialMediaHandles: [],
@@ -656,15 +660,18 @@ export default {
     // 添加书签
     handleBookMark(row) {
       axios
-        .post("/api/bookmark", { id: row.id })
+        .patch(`/api/user/favorite/${row.id}`)
         .then((res) => {
           console.log(res);
           if (res.data.code === "0") {
-            ElMessage.success("Bookmarked Successfully");
+            ElMessage.success(
+              row.bookmark ? "Removed Bookmark" : "Bookmarked Successfully"
+            );
           } else {
             ElMessage.error(res.data.msg);
           }
-          this.loadBookMark(); // 刷新表格数据
+          // 刷新表格数据
+          this.load();
         })
         .catch((error) => {
           ElMessage.error("Bookmark failed");
@@ -950,6 +957,10 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* 收藏图标样式 */
+.bookmarked {
+  color: #ffd700; /* 深色星标 (Gold) */
+}
 /* 操作按钮组布局 */
 .operation-group {
   display: flex;

@@ -27,10 +27,10 @@
 
     <!-- 数据表格 -->
     <el-table :data="tableData" border stripe class="custom-table">
-      <el-table-column prop="username" label="Username" />
+      <el-table-column prop="username" label="Username" width="150" />
 
       <!-- 电话号码列 -->
-      <el-table-column label="Phone Numbers" width="180">
+      <el-table-column label="Phone Numbers" width="250">
         <template #default="scope">
           <div v-for="phone in scope.row.phoneNumbers" :key="phone.id">
             {{ phone.type }}: {{ phone.number }}
@@ -39,7 +39,7 @@
       </el-table-column>
 
       <!-- 电子邮件地址列 -->
-      <el-table-column label="Email Addresses" width="180">
+      <el-table-column label="Email Addresses" width="250">
         <template #default="scope">
           <div v-for="email in scope.row.emailAddresses" :key="email.id">
             {{ email.type }}: {{ email.email }}
@@ -48,7 +48,7 @@
       </el-table-column>
 
       <!-- 社交媒体账户列 -->
-      <el-table-column label="Social Media Handles" width="150">
+      <el-table-column label="Social Media Handles" width="250">
         <template #default="scope">
           <div v-for="social in scope.row.socialMediaHandles" :key="social.id">
             {{ social.platform }}: {{ social.handle }}
@@ -57,7 +57,7 @@
       </el-table-column>
 
       <!-- 物理地址列 -->
-      <el-table-column label="Physical Addresses" width="180">
+      <el-table-column label="Physical Addresses" width="250">
         <template #default="scope">
           <div v-for="address in scope.row.physicalAddresses" :key="address.id">
             {{ address.type }}: {{ address.address }}

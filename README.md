@@ -2,6 +2,7 @@
 
 ## 💡 Overview
 
+
 This project is a web-based contact management application built using Vue.js and Element Plus. It allows users to manage their contacts, including phone numbers, email addresses, social media handles, and physical addresses. Users can perform CRUD (Create, Read, Update, Delete) operations on contact information and use features such as import/export, bookmarking, and search.
 
 The application is styled to resemble an Apple-like interface, providing an intuitive and user-friendly experience.
